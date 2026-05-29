@@ -187,21 +187,42 @@ import {
   type TokenStandard,
 } from '~/utils/batchTransfer'
 import { emptyRow, type TransferRow } from '~/utils/transferRow'
+import { baseInputToQuery, queryToBaseInput } from '~/utils/queryState'
 
 const config = useConfig()
 const { address, isConnected } = useConnection()
 const chainId = useMainChainId()
 const runtime = useRuntimeConfig()
 const toast = useToast()
+const route = useRoute()
+const router = useRouter()
 
-// --- Form state ---
-const standard = ref<TokenStandard>('erc721')
-const mode = ref<'single' | 'many'>('single')
-const safe = ref(true)
-const tokenAddress = ref('')
-const recipient = ref('')
-const equalAmount = ref('')
+// --- Form state (the base input is seeded from the URL query, so a prepared
+// link arrives with token/standard/recipient/etc. already filled in) ---
+const initial = queryToBaseInput(route.query)
+const standard = ref<TokenStandard>(initial.standard)
+const mode = ref<'single' | 'many'>(initial.mode)
+const safe = ref(initial.safe)
+const tokenAddress = ref(initial.tokenAddress)
+const recipient = ref(initial.recipient)
+const equalAmount = ref(initial.amount)
 const rows = ref<TransferRow[]>([emptyRow()])
+
+// Mirror the base input back into the URL so the current configuration is
+// always shareable. `replace` (not `push`) keeps it out of the history stack.
+watch([standard, mode, safe, tokenAddress, recipient, equalAmount], () => {
+  router.replace({
+    path: route.path,
+    query: baseInputToQuery({
+      standard: standard.value,
+      mode: mode.value,
+      safe: safe.value,
+      tokenAddress: tokenAddress.value,
+      recipient: recipient.value,
+      amount: equalAmount.value,
+    }),
+  })
+})
 
 // Reset rows to a clean slate when the standard changes; the column shape
 // (and therefore the meaning of each field) differs per standard.
