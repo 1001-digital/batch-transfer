@@ -28,7 +28,7 @@ export default defineNuxtConfig({
         { property: 'og:type', content: 'website' },
         { name: 'twitter:card', content: 'summary_large_image' },
       ],
-      link: [{ rel: 'icon', href: '/favicon.svg' }],
+      link: [{ rel: 'icon', href: '/icon.svg' }],
     },
   },
 
