@@ -3,8 +3,8 @@ pragma solidity 0.8.34;
 
 /// @title  ReverseRegistrarMock
 /// @notice Test double for the ENS Reverse Registrar `setName` constructor
-///         call. Etched at the canonical registrar address so `BatchTransfer`
-///         can deploy on local networks.
+///         call. Deployed locally and passed to `BatchTransfer`'s constructor
+///         so the deploy-time registration resolves under test.
 contract ReverseRegistrarMock {
     uint256 public calls;
     address public lastCaller;

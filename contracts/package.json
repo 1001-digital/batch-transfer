@@ -9,8 +9,8 @@
     "test": "hardhat test",
     "test:gas": "hardhat test --gas-stats",
     "node": "hardhat node",
-    "deploy:sepolia": "hardhat ignition deploy ignition/modules/BatchTransfer.ts --network sepolia",
-    "deploy:mainnet": "hardhat ignition deploy ignition/modules/BatchTransfer.ts --network mainnet",
+    "deploy:sepolia": "hardhat ignition deploy ignition/modules/BatchTransfer.ts --network sepolia --parameters ignition/parameters/sepolia.json",
+    "deploy:mainnet": "hardhat ignition deploy ignition/modules/BatchTransfer.ts --network mainnet --parameters ignition/parameters/mainnet.json",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

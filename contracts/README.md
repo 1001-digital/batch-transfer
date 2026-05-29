@@ -60,3 +60,20 @@ pnpm --filter @1001-digital/batch-transfer-contracts deploy:mainnet
 Deployment uses [Hardhat Ignition](https://hardhat.org/ignition)
 (`ignition/modules/BatchTransfer.ts`). After deploying, copy the address into
 the UI's `runtimeConfig` (see `ui/nuxt.config.ts`).
+
+### ENS primary name
+
+On deploy, the constructor claims `batchtransfer.eth` as the contract's ENS
+primary name via the network's ENS L1 Reverse Registrar. The registrar address
+is a per-network deploy parameter, set in `ignition/parameters/<network>.json`:
+
+| Network | Reverse Registrar                            |
+| ------- | -------------------------------------------- |
+| Mainnet | `0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb` |
+| Sepolia | `0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6` |
+
+Pass `0x0000000000000000000000000000000000000000` to skip registration on chains
+without a reverse registrar. This is a one-time deploy-time call — it writes no
+storage and grants no role, so the contract stays stateless and ownerless. To
+finish wiring the name, point `batchtransfer.eth`'s resolver at the deployed
+address so the reverse record resolves end-to-end.

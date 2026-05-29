@@ -51,12 +51,16 @@ contract BatchTransfer {
     // ---------------------------------------------------------------------
 
     /// @notice Claims `batchtransfer.eth` as this contract's ENS primary name.
-    /// @dev One-time deploy-time side effect against the canonical ENS L1
-    ///      Reverse Registrar. It writes no contract storage and grants no
-    ///      role, so the contract stays stateless and ownerless afterwards.
-    constructor() {
-        IReverseRegistrar(0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb)
-            .setName('batchtransfer.eth');
+    /// @dev One-time deploy-time side effect against the ENS L1 Reverse
+    ///      Registrar for the target network (mainnet, Sepolia, …). Pass
+    ///      `address(0)` to skip registration on chains without a reverse
+    ///      registrar. It writes no contract storage and grants no role, so the
+    ///      contract stays stateless and ownerless afterwards.
+    /// @param reverseRegistrar the ENS Reverse Registrar, or `address(0)` to skip
+    constructor(address reverseRegistrar) {
+        if (reverseRegistrar != address(0)) {
+            IReverseRegistrar(reverseRegistrar).setName('batchtransfer.eth');
+        }
     }
 
     // ---------------------------------------------------------------------
