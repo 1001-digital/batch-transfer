@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="row-actions">
+    <FormInputGroup class="row-actions">
       <Button
         type="button"
         class="small secondary"
@@ -70,7 +70,7 @@
       >
         <span>Paste a list</span>
       </Button>
-    </div>
+    </FormInputGroup>
 
     <div
       v-if="importOpen"
@@ -86,7 +86,7 @@
         One entry per line. Fields separated by comma or space, in the order:
         <code>{{ formatHint }}</code>
       </p>
-      <div class="row-actions">
+      <FormInputGroup class="row-actions">
         <Button
           type="button"
           class="small"
@@ -103,7 +103,7 @@
         >
           Append
         </Button>
-      </div>
+      </FormInputGroup>
     </div>
   </div>
 </template>
@@ -240,9 +240,7 @@ const applyImport = (replace: boolean) => {
 }
 
 .row-actions {
-  display: flex;
-  gap: var(--spacer-sm);
-  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .import {

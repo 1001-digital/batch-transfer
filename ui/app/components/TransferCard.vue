@@ -49,30 +49,30 @@
           <span class="step-n">2</span> {{ destinationHeading }}
         </h2>
 
-        <div
+        <FormInputGroup
           class="mode-toggle"
           role="radiogroup"
           :aria-label="destinationHeading"
         >
-          <button
+          <Button
             type="button"
             role="radio"
             :aria-checked="mode === 'single'"
-            :class="['segment', { active: mode === 'single' }]"
+            :class="['segment', mode === 'single' ? 'primary active' : 'tertiary']"
             @click="mode = 'single'"
           >
             {{ modeLabels.single }}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             role="radio"
             :aria-checked="mode === 'many'"
-            :class="['segment', { active: mode === 'many' }]"
+            :class="['segment', mode === 'many' ? 'primary active' : 'tertiary']"
             @click="mode = 'many'"
           >
             {{ modeLabels.many }}
-          </button>
-        </div>
+          </Button>
+        </FormInputGroup>
 
         <label
           v-if="standard !== 'erc20' && mode === 'single'"
@@ -654,33 +654,11 @@ function onComplete() {
 }
 
 .mode-toggle {
-  display: inline-flex;
-  width: 100%;
-  border: var(--border);
-  border-radius: var(--border-radius);
-  overflow: hidden;
+  inline-size: 100%;
 }
 
-.mode-toggle .segment {
+.mode-toggle :deep(.segment) {
   flex: 1;
-  appearance: none;
-  background: transparent;
-  border: 0;
-  border-inline-end: var(--border);
-  color: var(--muted);
-  font: inherit;
-  font-size: var(--ui-font-size);
-  padding-block: var(--ui-padding-block);
-  cursor: pointer;
-}
-
-.mode-toggle .segment:last-child {
-  border-inline-end: 0;
-}
-
-.mode-toggle .segment.active {
-  color: var(--white);
-  background: var(--color);
 }
 
 .summary {

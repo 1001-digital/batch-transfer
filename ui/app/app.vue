@@ -1,7 +1,6 @@
 <template>
   <div class="shell">
     <NuxtLoadingIndicator color="var(--primary)" />
-    <SiteHeader />
     <main class="shell-main container">
       <NuxtPage />
     </main>
@@ -12,7 +11,7 @@
           href="https://1001.digital"
           target="_blank"
           rel="noopener"
-          >1001.digital</a
+          >1001</a
         >
       </span>
       <nav>
@@ -51,8 +50,8 @@
   align-items: center;
   justify-content: space-between;
   padding-block: var(--spacer);
-  border-block-start: var(--border);
   font-size: var(--font-sm);
+  text-transform: uppercase;
 }
 
 .site-footer nav {
