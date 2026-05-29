@@ -1,180 +1,181 @@
 <template>
-  <Card class="transfer-card">
-    <div class="stack">
-      <!-- 1 · Token + standard -->
-      <section class="step stack">
-        <h2 class="step-title"><span class="step-n">1</span> Token</h2>
+  <div class="stack">
+    <!-- 1 · Token + standard -->
+    <section class="step stack">
+      <h2 class="step-title"><span class="step-n">1</span> Token</h2>
 
-        <StandardPicker v-model="standard" />
+      <StandardPicker v-model="standard" />
 
-        <label class="field">
-          <span class="field-label">Contract address</span>
-          <input
-            v-model="tokenAddress"
-            type="text"
-            placeholder="0x… token contract"
-            autocomplete="off"
-            spellcheck="false"
-            class="mono-break"
-          />
-        </label>
-
-        <p
-          v-if="tokenLabel"
-          class="muted token-meta"
-        >
-          {{ tokenLabel }}
-        </p>
-
-        <label
-          v-if="standard === 'erc721'"
-          class="switch-row"
-        >
-          <FormSwitch v-model="safe" />
-          <span>
-            Safe transfer
-            <small class="muted"
-              >: calls <code>onERC721Received</code>. Disable for contracts that
-              don't implement it.</small
-            >
-          </span>
-        </label>
-      </section>
-
-      <hr />
-
-      <!-- 2 · Destination -->
-      <section class="step stack">
-        <h2 class="step-title">
-          <span class="step-n">2</span> {{ destinationHeading }}
-        </h2>
-
-        <FormInputGroup
-          class="mode-toggle"
-          role="radiogroup"
-          :aria-label="destinationHeading"
-        >
-          <Button
-            type="button"
-            role="radio"
-            :aria-checked="mode === 'single'"
-            :class="['segment', mode === 'single' ? 'primary active' : 'tertiary']"
-            @click="mode = 'single'"
-          >
-            {{ modeLabels.single }}
-          </Button>
-          <Button
-            type="button"
-            role="radio"
-            :aria-checked="mode === 'many'"
-            :class="['segment', mode === 'many' ? 'primary active' : 'tertiary']"
-            @click="mode = 'many'"
-          >
-            {{ modeLabels.many }}
-          </Button>
-        </FormInputGroup>
-
-        <label
-          v-if="standard !== 'erc20' && mode === 'single'"
-          class="field"
-        >
-          <span class="field-label">Recipient</span>
-          <EvmAddressInput
-            v-model="recipient"
-            placeholder="0x… or name.eth"
-            autocomplete="off"
-            spellcheck="false"
-          />
-        </label>
-
-        <label
-          v-if="standard === 'erc20' && mode === 'single'"
-          class="field"
-        >
-          <span class="field-label">
-            Amount each{{ symbol ? ` (${symbol})` : '' }}
-          </span>
-          <input
-            v-model="equalAmount"
-            type="number"
-            min="0"
-            step="any"
-            inputmode="decimal"
-            placeholder="0.0"
-          />
-        </label>
-
-        <TransferRows
-          v-model="rows"
-          :standard="standard"
-          :mode="mode"
-          :symbol="symbol"
+      <label class="field">
+        <span class="field-label">Contract address</span>
+        <input
+          v-model="tokenAddress"
+          type="text"
+          placeholder="0x… token contract"
+          autocomplete="off"
+          spellcheck="false"
+          class="mono-break"
         />
-      </section>
+      </label>
 
-      <hr />
+      <p
+        v-if="tokenLabel"
+        class="muted token-meta"
+      >
+        {{ tokenLabel }}
+      </p>
 
-      <!-- 3 · Execute -->
-      <section class="step stack">
-        <h2 class="step-title"><span class="step-n">3</span> Transfer</h2>
-
-        <ClientOnly>
-          <p
-            v-if="isConnected"
-            class="transfer-from"
+      <label
+        v-if="standard === 'erc721'"
+        class="switch-row"
+      >
+        <FormSwitch v-model="safe" />
+        <span>
+          Safe transfer
+          <small class="muted"
+            >calls <code>onERC721Received</code>. Disable for contracts that
+            don't implement it.</small
           >
-            Transfer from
-            <EvmProfile class-name="unstyled profile-trigger" />
-          </p>
-        </ClientOnly>
+        </span>
+      </label>
+    </section>
 
+    <hr />
+
+    <!-- 2 · Destination -->
+    <section class="step stack">
+      <h2 class="step-title">
+        <span class="step-n">2</span> {{ destinationHeading }}
+      </h2>
+
+      <FormInputGroup
+        class="mode-toggle"
+        role="radiogroup"
+        :aria-label="destinationHeading"
+      >
+        <Button
+          type="button"
+          role="radio"
+          :aria-checked="mode === 'single'"
+          :class="[
+            'segment',
+            mode === 'single' ? 'primary active' : 'tertiary',
+          ]"
+          @click="mode = 'single'"
+        >
+          {{ modeLabels.single }}
+        </Button>
+        <Button
+          type="button"
+          role="radio"
+          :aria-checked="mode === 'many'"
+          :class="['segment', mode === 'many' ? 'primary active' : 'tertiary']"
+          @click="mode = 'many'"
+        >
+          {{ modeLabels.many }}
+        </Button>
+      </FormInputGroup>
+
+      <label
+        v-if="standard !== 'erc20' && mode === 'single'"
+        class="field"
+      >
+        <span class="field-label">Recipient</span>
+        <EvmAddressInput
+          v-model="recipient"
+          placeholder="0x… or name.eth"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </label>
+
+      <label
+        v-if="standard === 'erc20' && mode === 'single'"
+        class="field"
+      >
+        <span class="field-label">
+          Amount each{{ symbol ? ` (${symbol})` : '' }}
+        </span>
+        <input
+          v-model="equalAmount"
+          type="number"
+          min="0"
+          step="any"
+          inputmode="decimal"
+          placeholder="0.0"
+        />
+      </label>
+
+      <TransferRows
+        v-model="rows"
+        :standard="standard"
+        :mode="mode"
+        :symbol="symbol"
+      />
+    </section>
+
+    <hr />
+
+    <!-- 3 · Execute -->
+    <section class="step stack">
+      <h2 class="step-title"><span class="step-n">3</span> Transfer</h2>
+
+      <ClientOnly>
         <p
-          v-if="summary"
-          class="summary"
+          v-if="isConnected"
+          class="transfer-from"
         >
-          {{ summary }}
+          Transfer from
+          <EvmProfile class-name="unstyled profile-trigger" />
         </p>
+      </ClientOnly>
 
-        <Alert
-          v-if="isConnected && !contractAddress"
-          type="error"
+      <p
+        v-if="summary"
+        class="summary"
+      >
+        {{ summary }}
+      </p>
+
+      <Alert
+        v-if="isConnected && !contractAddress"
+        type="error"
+      >
+        The Batch Transfer contract isn't configured for this network yet. Set
+        its address in <code>app/utils/batchTransfer.ts</code> (or via
+        <code>NUXT_PUBLIC_BATCH_TRANSFER_ADDRESS</code>) after deploying.
+      </Alert>
+
+      <ClientOnly>
+        <EvmConnect v-if="!isConnected" />
+
+        <EvmMultiTransactionFlowDialog
+          v-else
+          :steps="steps"
+          :text="dialogText"
+          @complete="onComplete"
         >
-          The Batch Transfer contract isn't configured for this network yet. Set
-          its address in <code>app/utils/batchTransfer.ts</code> (or via
-          <code>NUXT_PUBLIC_BATCH_TRANSFER_ADDRESS</code>) after deploying.
-        </Alert>
-
-        <ClientOnly>
-          <EvmConnect v-if="!isConnected" />
-
-          <EvmMultiTransactionFlowDialog
-            v-else
-            :steps="steps"
-            :text="dialogText"
-            @complete="onComplete"
-          >
-            <template #start="{ start }">
-              <Button
-                class="primary block"
-                :disabled="!canTransfer"
-                @click="start"
-              >
-                {{ approveAndTransferLabel }}
-              </Button>
-            </template>
-          </EvmMultiTransactionFlowDialog>
-
-          <template #fallback>
+          <template #start="{ start }">
             <Button
               class="primary block"
-              disabled
-              >Connect a wallet</Button
+              :disabled="!canTransfer"
+              @click="start"
             >
+              {{ approveAndTransferLabel }}
+            </Button>
           </template>
-        </ClientOnly>
-      </section>
-    </div>
-  </Card>
+        </EvmMultiTransactionFlowDialog>
+
+        <template #fallback>
+          <Button
+            class="primary block"
+            disabled
+            >Connect a wallet</Button
+          >
+        </template>
+      </ClientOnly>
+    </section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -609,10 +610,6 @@ function onComplete() {
 </script>
 
 <style scoped>
-.transfer-card {
-  width: 100%;
-}
-
 .step-title {
   display: flex;
   align-items: center;

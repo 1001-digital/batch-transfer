@@ -2,25 +2,29 @@
   <div class="shell">
     <NuxtLoadingIndicator color="var(--primary)" />
     <main class="shell-main container">
-      <NuxtPage />
+      <div class="workspace">
+        <AppTabs />
+        <div class="workspace-body">
+          <NuxtPage />
+        </div>
+      </div>
     </main>
     <footer class="site-footer container">
       <span class="muted">
-        Batch Transfer · by
+        Batch Transfer ·
         <a
           href="https://1001.digital"
           target="_blank"
           rel="noopener"
-          >1001</a
+          >by 1001</a
         >
       </span>
       <nav>
-        <NuxtLink to="/about">About</NuxtLink>
         <a
           href="https://github.com/1001-digital/batch-transfer"
           target="_blank"
           rel="noopener"
-          >Source</a
+          >Github</a
         >
       </nav>
     </footer>
@@ -28,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-// All chrome lives here; pages render inside <main>.
+// All chrome lives here; pages render inside the tabbed workspace.
 </script>
 
 <style scoped>
@@ -45,11 +49,22 @@
   padding-block: var(--spacer-lg);
 }
 
+.workspace {
+  display: flex;
+  flex-direction: column;
+}
+
+.workspace-body {
+  border: var(--card-border);
+  background: var(--card-background);
+  padding: var(--spacer);
+}
+
 .site-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-block: var(--spacer);
+  padding-bottom: var(--spacer-lg);
   font-size: var(--font-sm);
   text-transform: uppercase;
 }

@@ -45,10 +45,6 @@
         This app is a fully static, client-rendered bundle with no server
         component. It's built to be pinned to IPFS and served from any gateway.
       </p>
-
-      <p>
-        <NuxtLink to="/">← Back to the app</NuxtLink>
-      </p>
     </Prose>
   </article>
 </template>
