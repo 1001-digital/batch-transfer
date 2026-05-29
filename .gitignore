@@ -1,0 +1,32 @@
+# dependencies
+node_modules
+.pnpm-store
+
+# build output
+dist
+.output
+.nuxt
+.nitro
+.cache
+
+# hardhat
+artifacts
+cache
+typechain-types
+ignition/deployments/chain-31337
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# editor / os
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea

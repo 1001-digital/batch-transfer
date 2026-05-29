@@ -1,0 +1,25 @@
+{
+  "name": "@1001-digital/batch-transfer-contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Modern multi-standard (ERC-20 / ERC-721 / ERC-1155) batch transfer contract.",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:gas": "hardhat test --gas-stats",
+    "node": "hardhat node",
+    "deploy:sepolia": "hardhat ignition deploy ignition/modules/BatchTransfer.ts --network sepolia",
+    "deploy:mainnet": "hardhat ignition deploy ignition/modules/BatchTransfer.ts --network mainnet",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition": "^3.1.5",
+    "@nomicfoundation/hardhat-toolbox-viem": "^5.0.5",
+    "@types/node": "^22.19.11",
+    "hardhat": "^3.4.5",
+    "solady": "^0.1.26",
+    "typescript": "~5.8.3",
+    "viem": "^2.48.11"
+  }
+}

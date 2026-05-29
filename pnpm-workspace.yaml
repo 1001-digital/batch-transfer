@@ -1,0 +1,17 @@
+packages:
+  - contracts
+  - ui
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@reown/appkit'
+  - bufferutil
+  - esbuild
+  - iso-constants
+  - keccak
+  - node-datachannel
+  - protobufjs
+  - secp256k1
+  - unrs-resolver
+  - utf-8-validate
+  - vue-demi

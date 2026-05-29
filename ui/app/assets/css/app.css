@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/*
+ * Batch Transfer — app styles.
+ *
+ * Extends @1001-digital/styles (loaded via layers.evm → layers.base). We only
+ * set a monospace type system and a couple of small layout helpers; the design
+ * tokens and component styles come from the shared framework.
+ */
+
+@layer variables {
+  :root {
+    --font-family:
+      'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo,
+      Consolas, monospace;
+    --content-width: 48rem;
+  }
+}
+
+@layer base {
+  body {
+    font-family: var(--font-family);
+  }
+}
+
+@layer utilities {
+  .container {
+    width: 100%;
+    max-inline-size: var(--content-width);
+    margin-inline: auto;
+    padding-inline: var(--spacer);
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacer);
+  }
+
+  .muted {
+    color: var(--muted);
+  }
+
+  .mono-break {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+}

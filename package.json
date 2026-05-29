@@ -1,0 +1,23 @@
+{
+  "name": "@1001-digital/batch-transfer",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "build": "pnpm -r --if-present build",
+    "generate": "pnpm --filter @1001-digital/batch-transfer-ui generate",
+    "dev": "pnpm --filter @1001-digital/batch-transfer-ui dev",
+    "test": "pnpm --filter @1001-digital/batch-transfer-contracts test",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.8.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "viem": "2.48.4"
+    }
+  }
+}
