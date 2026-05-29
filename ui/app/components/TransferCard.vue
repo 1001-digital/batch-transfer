@@ -118,6 +118,16 @@
       <section class="step stack">
         <h2 class="step-title"><span class="step-n">3</span> Transfer</h2>
 
+        <ClientOnly>
+          <p
+            v-if="isConnected"
+            class="transfer-from"
+          >
+            Transfer from
+            <EvmProfile class-name="unstyled profile-trigger" />
+          </p>
+        </ClientOnly>
+
         <p
           v-if="summary"
           class="summary"
@@ -659,6 +669,28 @@ function onComplete() {
 
 .mode-toggle :deep(.segment) {
   flex: 1;
+}
+
+.transfer-from {
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-sm);
+  margin: 0;
+  font-size: var(--font-sm);
+  color: var(--muted);
+}
+
+.transfer-from :deep(.profile-trigger) {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--color);
+  font-weight: var(--font-weight-bold);
+}
+
+.transfer-from :deep(.profile-trigger:hover) {
+  color: var(--muted);
 }
 
 .summary {
