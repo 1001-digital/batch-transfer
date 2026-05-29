@@ -10,12 +10,12 @@
       </p>
 
       <ul>
-        <li><strong>ERC-721</strong> — NFTs, one or many per recipient.</li>
+        <li><strong>ERC-721</strong>: NFTs, one or many per recipient.</li>
         <li>
-          <strong>ERC-1155</strong> — multi-tokens, with per-id quantities.
+          <strong>ERC-1155</strong>: multi-tokens, with per-id quantities.
         </li>
         <li>
-          <strong>ERC-20</strong> — fungible tokens, equal or custom amounts.
+          <strong>ERC-20</strong>: fungible tokens, equal or custom amounts.
         </li>
       </ul>
 
@@ -36,7 +36,7 @@
       <p>
         Tokens always move <em>from your wallet</em>. The contract holds
         nothing, has no owner, and can only move what you have explicitly
-        approved — so the approval is safe to grant.
+        approved, so the approval is safe to grant.
       </p>
 
       <h2>Self-hostable</h2>
@@ -54,6 +54,11 @@
 </template>
 
 <script setup lang="ts">
+// `<Prose>` emits `class="prose"`, but the layer ships these styles as a
+// separate entry that isn't in the global bundle. Import it here so the rules
+// load with the about-page chunk.
+import '@1001-digital/styles/prose.css'
+
 useHead({ title: 'About · Batch Transfer' })
 </script>
 

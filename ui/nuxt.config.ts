@@ -1,6 +1,6 @@
 const siteName = 'Batch Transfer'
 const siteDescription =
-  'Move many ERC-20, ERC-721, or ERC-1155 tokens in a single transaction — to one wallet or many.'
+  'Move many ERC-20, ERC-721, or ERC-1155 tokens in a single transaction, to one wallet or many.'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     },
   },
 
-  // Override the layer's `node-cluster` Nitro preset — this app ships as a
+  // Override the layer's `node-cluster` Nitro preset; this app ships as a
   // static client bundle with no server.
   nitro: {
     preset: 'static',

@@ -5,7 +5,6 @@
         to="/"
         class="brand"
       >
-        <Icon name="lucide:send-horizontal" />
         <span class="brand-word">Batch&nbsp;Transfer</span>
       </NuxtLink>
 
@@ -31,11 +30,10 @@ const { isConnected } = useConnection()
 <style scoped>
 .site-header {
   border-block-end: var(--border);
-  background: var(--background-semi);
+  background: var(--card-background);
   position: sticky;
   inset-block-start: 0;
   z-index: calc(var(--z-index-ui, 100) + 1);
-  backdrop-filter: blur(8px);
 }
 
 .header-inner {
@@ -56,11 +54,12 @@ const { isConnected } = useConnection()
 }
 
 .brand:hover {
-  color: var(--primary);
+  color: var(--muted);
 }
 
 .brand-word {
-  letter-spacing: var(--letter-spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .connect {

@@ -8,7 +8,7 @@ export default defineAppConfig({
         blockExplorer: 'https://etherscan.io',
       },
     },
-    // Resolve ENS directly on-chain via the configured mainnet RPC — no
+    // Resolve ENS directly on-chain via the configured mainnet RPC, with no
     // indexer service required, which keeps the static build self-contained.
     ens: {
       mode: 'chain',

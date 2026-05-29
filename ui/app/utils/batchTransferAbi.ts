@@ -1,4 +1,4 @@
-// Minimal ABI for the BatchTransfer contract — only the methods, errors, and
+// Minimal ABI for the BatchTransfer contract: only the methods, errors, and
 // events the UI interacts with. Keep in sync with
 // `contracts/contracts/BatchTransfer.sol`.
 export const batchTransferAbi = [

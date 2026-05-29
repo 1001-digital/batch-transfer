@@ -8,10 +8,10 @@ layer (wallet connection, ENS, transaction flows, design system).
 ## Flow
 
 1. **Connect** a wallet (injected, MetaMask, Coinbase, WalletConnect, Safe).
-2. **Token** — paste the token contract and pick its standard (ERC-721 /
+2. **Token**: paste the token contract and pick its standard (ERC-721 /
    ERC-1155 / ERC-20).
-3. **Recipients** — one wallet or many; paste a list to fill rows in bulk.
-4. **Approve & Transfer** — a single guided flow approves the contract (skipped
+3. **Recipients**: one wallet or many; paste a list to fill rows in bulk.
+4. **Approve & Transfer**: a single guided flow approves the contract (skipped
    if already approved) and then sends the whole batch in one transaction.
 
 ENS names are resolved on-chain at execution time, so no indexer is required.
@@ -39,9 +39,9 @@ ipfs add -r .output/public
 
 ## Configuration
 
-- **Contract address** — after deploying `@1001-digital/batch-transfer-contracts`, add the
+- **Contract address**: after deploying `@1001-digital/batch-transfer-contracts`, add the
   address to `app/utils/batchTransfer.ts` (keyed by chain id), or set
   `NUXT_PUBLIC_BATCH_TRANSFER_ADDRESS` for the active chain.
-- **RPC / WalletConnect** — see `.env.example`.
-- **Chains** — `app/app.config.ts` (`evm.chains`) plus the matching RPC entry in
+- **RPC / WalletConnect**: see `.env.example`.
+- **Chains**: `app/app.config.ts` (`evm.chains`) plus the matching RPC entry in
   `nuxt.config.ts`. The app targets Ethereum mainnet by default.

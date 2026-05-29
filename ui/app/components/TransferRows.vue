@@ -49,7 +49,7 @@
           title="Remove row"
           @click="removeRow(index)"
         >
-          <Icon name="close" />
+          ×
         </button>
       </div>
     </div>
@@ -60,7 +60,6 @@
         class="small secondary"
         @click="addRow"
       >
-        <Icon name="add" />
         <span>Add row</span>
       </Button>
 
@@ -69,7 +68,6 @@
         class="small tertiary"
         @click="importOpen = !importOpen"
       >
-        <Icon name="lucide:clipboard-list" />
         <span>Paste a list</span>
       </Button>
     </div>
@@ -131,7 +129,7 @@ const fields = computed<Field[]>(() => {
   if (props.standard === 'erc721') return many ? ['id', 'to'] : ['id']
   if (props.standard === 'erc1155')
     return many ? ['id', 'amount', 'to'] : ['id', 'amount']
-  // erc20 — recipients always; per-row amount only in "custom" (many) mode.
+  // erc20: recipients always; per-row amount only in "custom" (many) mode.
   return many ? ['to', 'amount'] : ['to']
 })
 
@@ -237,6 +235,8 @@ const applyImport = (replace: boolean) => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-size: var(--font-lg);
+  line-height: 1;
 }
 
 .row-actions {

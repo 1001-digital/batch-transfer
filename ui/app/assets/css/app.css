@@ -1,18 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
-
 /*
- * Batch Transfer — app styles.
+ * Batch Transfer: minimal theme.
  *
- * Extends @1001-digital/styles (loaded via layers.evm → layers.base). We only
- * set a monospace type system and a couple of small layout helpers; the design
- * tokens and component styles come from the shared framework.
+ * Overrides the @1001-digital/styles design tokens (loaded via
+ * layers.evm → layers.base). The framework declares its cascade layers up
+ * front (`@layer variables, reset, base, components, utilities`); because this
+ * file is loaded *after* the framework, our same-layer rules win on source
+ * order, no `!important` needed.
+ *
+ * The look: light mode only, light-gray page with white surfaces, square
+ * corners everywhere, harsh full-contrast black borders, a plain system
+ * sans-serif, and no decorative shadows. Icons are removed in the components.
  */
 
 @layer variables {
   :root {
+    /* Light mode only: pin the scheme so every light-dark() resolves light. */
+    color-scheme: light;
+
+    /* Plain system sans, a flat restrained scale, no letter-spacing flourish. */
     --font-family:
-      'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo,
-      Consolas, monospace;
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+      sans-serif;
+    --font-xs: 0.625rem;
+    --font-sm: 0.6875rem;
+    --font-base: 0.8125rem;
+    --font-lg: 0.9375rem;
+    --font-xl: 1.0625rem;
+    --font-2xl: 1.25rem;
+    --font-3xl: 1.625rem;
+    --letter-spacing-sm: 0;
+    --letter-spacing: 0;
+    --letter-spacing-md: 0;
+    --letter-spacing-lg: 0;
+    --line-height-lg: 150%;
+
+    /* UI text: uppercased chrome, slight tracking so caps stay legible. */
+    --ui-font-size: 0.6875rem;
+    --ui-text-transform: uppercase;
+    --ui-letter-spacing: 0.04em;
+
+    /* Surfaces: light-gray page, white cards/inputs/buttons to separate them. */
+    --background: var(--gray-50);
+    --card-background: var(--white);
+    --card-background-highlight: var(--white);
+    --input-background: var(--white);
+    --input-background-highlight: var(--white);
+    --button-background: var(--white);
+    --button-background-highlight: var(--gray-100);
+    --button-tertiary-background: var(--white);
+    --button-tertiary-background-highlight: var(--gray-100);
+
+    /* Harsh borders: full-contrast black, unchanged on hover/focus. */
+    --border-color: var(--black);
+    --border-color-highlight: var(--black);
+    --button-border-color-highlight: var(--black);
+    --button-tertiary-border-color: var(--black);
+    --button-tertiary-border-color-highlight: var(--black);
+    --button-primary-border-color: var(--black);
+    --button-primary-border-color-highlight: var(--black);
+
+    /* Square everything. */
+    --border-radius-sm: 0;
+    --border-radius: 0;
+    --border-radius-lg: 0;
+    --button-border-radius: 0;
+    --card-border-radius: 0;
+    --dialog-border-radius: 0;
+    --switch-border-radius: 0;
+
+    /* Flat: no decorative drop shadows. */
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+    --shadow: none;
+
     --content-width: 48rem;
   }
 }
@@ -20,6 +81,13 @@
 @layer base {
   body {
     font-family: var(--font-family);
+  }
+
+  /* UI chrome is uppercased, but placeholders are example data (addresses, ENS
+     names) — keep them in their natural case so they stay readable. */
+  input::placeholder,
+  textarea::placeholder {
+    text-transform: none;
   }
 }
 
@@ -44,5 +112,13 @@
   .mono-break {
     overflow-wrap: anywhere;
     word-break: break-all;
+  }
+
+  /* The resolved-address hint under EvmAddressInput inherits the input's size
+     by default (its --small-font-size token is unset). Shrink it to match our
+     other help text. `utilities` is ordered after the component's `components`
+     layer, so this wins without fighting the scoped selector's specificity. */
+  .evm-address-input > small {
+    font-size: var(--font-xs);
   }
 }

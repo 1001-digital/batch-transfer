@@ -63,7 +63,7 @@ const model = defineModel<TokenStandard>({ required: true })
 }
 
 .segment.active {
-  color: var(--background);
+  color: var(--white);
   background: var(--color);
 }
 </style>

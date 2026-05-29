@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@1001-digital/layers.evm": "^2.7.24",
+    "@1001-digital/styles": "^2.7.0",
     "@tanstack/vue-query": "5.95.2",
     "@vueuse/core": "^14.2.1",
     "@wagmi/core": "3.4.6",

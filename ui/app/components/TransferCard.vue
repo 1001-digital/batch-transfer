@@ -23,7 +23,7 @@
           v-if="tokenLabel"
           class="muted token-meta"
         >
-          <Icon name="check" /> {{ tokenLabel }}
+          {{ tokenLabel }}
         </p>
 
         <label
@@ -34,7 +34,7 @@
           <span>
             Safe transfer
             <small class="muted"
-              >— calls <code>onERC721Received</code>. Disable for contracts that
+              >: calls <code>onERC721Received</code>. Disable for contracts that
               don't implement it.</small
             >
           </span>
@@ -203,7 +203,7 @@ const recipient = ref('')
 const equalAmount = ref('')
 const rows = ref<TransferRow[]>([emptyRow()])
 
-// Reset rows to a clean slate when the standard changes — the column shape
+// Reset rows to a clean slate when the standard changes; the column shape
 // (and therefore the meaning of each field) differs per standard.
 watch(standard, () => {
   rows.value = [emptyRow()]
@@ -268,7 +268,7 @@ watch(
         meta.name = name as string
       }
     } catch {
-      // Non-conforming or unreachable contract — leave metadata blank.
+      // Non-conforming or unreachable contract: leave metadata blank.
     }
   },
   { immediate: true },
@@ -526,7 +526,7 @@ async function sendTransfer(): Promise<Hash> {
   return writeContract(config, {
     address: contractAddress.value!,
     abi: batchTransferAbi,
-    // Dynamic dispatch across many overloads — the exact arg/return types are
+    // Dynamic dispatch across many overloads; the exact arg/return types are
     // validated by the contract, not worth threading through wagmi's generics.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     functionName: functionName as any,
@@ -595,9 +595,8 @@ function onComplete() {
   justify-content: center;
   inline-size: var(--size-6);
   block-size: var(--size-6);
-  border-radius: 50%;
   background: var(--color);
-  color: var(--background);
+  color: var(--white);
   font-size: var(--font-sm);
 }
 
@@ -659,7 +658,7 @@ function onComplete() {
 }
 
 .mode-toggle .segment.active {
-  color: var(--background);
+  color: var(--white);
   background: var(--color);
 }
 

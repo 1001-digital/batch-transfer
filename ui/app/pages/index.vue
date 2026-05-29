@@ -3,7 +3,7 @@
     <section class="hero">
       <h1>Batch Transfer</h1>
       <p class="lead muted">
-        Move many ERC-721, ERC-1155, or ERC-20 tokens in a single transaction —
+        Move many ERC-721, ERC-1155, or ERC-20 tokens in a single transaction,
         to one wallet or to many at once.
       </p>
     </section>

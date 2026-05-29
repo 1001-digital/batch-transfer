@@ -7,19 +7,18 @@
     </main>
     <footer class="site-footer container">
       <span class="muted">
-        Batch Transfer · a
+        Batch Transfer · by
         <a
           href="https://1001.digital"
           target="_blank"
           rel="noopener"
           >1001.digital</a
         >
-        project
       </span>
       <nav>
         <NuxtLink to="/about">About</NuxtLink>
         <a
-          href="https://github.com/1001-digital"
+          href="https://github.com/1001-digital/batch-transfer"
           target="_blank"
           rel="noopener"
           >Source</a
@@ -59,6 +58,11 @@
 .site-footer nav {
   display: flex;
   gap: var(--spacer);
+}
+
+.site-footer nav a {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .site-footer a {
