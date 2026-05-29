@@ -63,17 +63,20 @@ the UI's `runtimeConfig` (see `ui/nuxt.config.ts`).
 
 ### ENS primary name
 
-On deploy, the constructor claims `batchtransfer.eth` as the contract's ENS
-primary name via the network's ENS L1 Reverse Registrar. The registrar address
-is a per-network deploy parameter, set in `ignition/parameters/<network>.json`:
+On deploy, the constructor claims an ENS primary name for the contract via the
+network's ENS L1 Reverse Registrar. Both the registrar address and the name are
+per-network deploy parameters (the name lives in each chain's own ENS
+namespace), set in `ignition/parameters/<network>.json`:
 
-| Network | Reverse Registrar                            |
-| ------- | -------------------------------------------- |
-| Mainnet | `0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb` |
-| Sepolia | `0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6` |
+| Network | Reverse Registrar (`reverseRegistrar`)       | Name (`ensName`)   |
+| ------- | -------------------------------------------- | ------------------ |
+| Mainnet | `0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb` | `batchtransfer.eth` |
+| Sepolia | `0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6` | `sepolia.batchtransfer.eth` |
 
-Pass `0x0000000000000000000000000000000000000000` to skip registration on chains
-without a reverse registrar. This is a one-time deploy-time call — it writes no
-storage and grants no role, so the contract stays stateless and ownerless. To
-finish wiring the name, point `batchtransfer.eth`'s resolver at the deployed
-address so the reverse record resolves end-to-end.
+Set `ensName` to a name you actually control on the target chain's ENS.
+Registration is skipped when the registrar is
+`0x0000000000000000000000000000000000000000` or the name is empty — e.g. on
+chains without a reverse registrar. This is a one-time deploy-time call — it
+writes no storage and grants no role, so the contract stays stateless and
+ownerless. To finish wiring the name, point its resolver at the deployed address
+so the reverse record resolves end-to-end.

@@ -7,13 +7,26 @@ import { getAddress, parseEther } from 'viem'
 // isolating each standard. Wallet clients: [deployer, alice, bob, carol].
 // A registrar mock is deployed and passed to the constructor so the
 // deploy-time `setName` call resolves locally.
-async function deploy() {
+async function deploy(ensName = 'batchtransfer.eth') {
   const connection: any = await network.create()
   const { viem } = connection
   const [deployer, alice, bob, carol] = await viem.getWalletClients()
   const registrar = await viem.deployContract('ReverseRegistrarMock')
-  const batch = await viem.deployContract('BatchTransfer', [registrar.address])
-  return { connection, viem, batch, registrar, deployer, alice, bob, carol }
+  const batch = await viem.deployContract('BatchTransfer', [
+    registrar.address,
+    ensName,
+  ])
+  return {
+    connection,
+    viem,
+    batch,
+    registrar,
+    ensName,
+    deployer,
+    alice,
+    bob,
+    carol,
+  }
 }
 
 type Ctx = Awaited<ReturnType<typeof deploy>>
@@ -21,7 +34,7 @@ type Ctx = Awaited<ReturnType<typeof deploy>>
 const addr = (wallet: any) => getAddress(wallet.account.address)
 
 describe('BatchTransfer · ENS', () => {
-  it('registers batchtransfer.eth as its primary name on deploy', async () => {
+  it('registers the configured name as its primary name on deploy', async () => {
     const ctx = await deploy()
 
     assert.equal(
@@ -35,14 +48,25 @@ describe('BatchTransfer · ENS', () => {
     )
   })
 
+  it('registers a per-chain name passed at deploy', async () => {
+    const ctx = await deploy('batchtransfer.test.eth')
+    assert.equal(await ctx.registrar.read.lastName(), 'batchtransfer.test.eth')
+  })
+
   it('skips ENS registration when the registrar is the zero address', async () => {
     const connection: any = await network.create()
     const { viem } = connection
     const batch = await viem.deployContract('BatchTransfer', [
       '0x0000000000000000000000000000000000000000',
+      'batchtransfer.eth',
     ])
     // Deploying without reverting is the assertion — no registrar is touched.
     assert.ok(batch.address)
+  })
+
+  it('skips ENS registration when the name is empty', async () => {
+    const ctx = await deploy('')
+    assert.equal(await ctx.registrar.read.calls(), 0n)
   })
 })
 
