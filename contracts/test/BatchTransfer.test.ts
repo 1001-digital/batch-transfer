@@ -3,12 +3,24 @@ import assert from 'node:assert/strict'
 import { network } from 'hardhat'
 import { getAddress, parseEther } from 'viem'
 
+// Canonical ENS L1 Reverse Registrar. `BatchTransfer`'s constructor
+// unconditionally calls `setName` on it, so local networks need code at this
+// address before the contract is deployed.
+const REVERSE_REGISTRAR = '0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb' as const
+
 // One network connection / deploy per `describe` keeps tests fast while still
 // isolating each standard. Wallet clients: [deployer, alice, bob, carol].
 async function deploy() {
   const connection: any = await network.create()
   const { viem } = connection
   const [deployer, alice, bob, carol] = await viem.getWalletClients()
+
+  // Etch a registrar mock so the constructor's `setName` call resolves.
+  const mock = await viem.deployContract('ReverseRegistrarMock')
+  const publicClient = await viem.getPublicClient()
+  const code = await publicClient.getCode({ address: mock.address })
+  await connection.networkHelpers.setCode(REVERSE_REGISTRAR, code)
+
   const batch = await viem.deployContract('BatchTransfer')
   return { connection, viem, batch, deployer, alice, bob, carol }
 }
@@ -16,6 +28,23 @@ async function deploy() {
 type Ctx = Awaited<ReturnType<typeof deploy>>
 
 const addr = (wallet: any) => getAddress(wallet.account.address)
+
+describe('BatchTransfer · ENS', () => {
+  it('registers batchtransfer.eth as its primary name on deploy', async () => {
+    const ctx = await deploy()
+    const registrar = await ctx.viem.getContractAt(
+      'ReverseRegistrarMock',
+      REVERSE_REGISTRAR,
+    )
+
+    assert.equal(await registrar.read.lastCaller(), getAddress(ctx.batch.address))
+    assert.equal(await registrar.read.lastName(), 'batchtransfer.eth')
+    assert.equal(
+      await registrar.read.nameOf([getAddress(ctx.batch.address)]),
+      'batchtransfer.eth',
+    )
+  })
+})
 
 describe('BatchTransfer · ERC-20', () => {
   let ctx: Ctx

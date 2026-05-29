@@ -4,11 +4,13 @@ pragma solidity 0.8.34;
 import {SafeTransferLib} from 'solady/src/utils/SafeTransferLib.sol';
 import {IERC721} from './interfaces/IERC721.sol';
 import {IERC1155} from './interfaces/IERC1155.sol';
+import {IReverseRegistrar} from './interfaces/IReverseRegistrar.sol';
 
 /// @title  BatchTransfer
-/// @author 1001
+///
 /// @notice Move many ERC-20, ERC-721, or ERC-1155 tokens in a single
 ///         transaction — to one recipient, or to many in parallel.
+///
 /// @dev    Tokens always move *from* `msg.sender`. Before calling, approve this
 ///         contract on the token contract:
 ///           - ERC-721 / ERC-1155: `setApprovalForAll(batchTransfer, true)`
@@ -18,6 +20,8 @@ import {IERC1155} from './interfaces/IERC1155.sol';
 ///         Inspired by Aleph Retamal's ERC721BatchTransfer, rebuilt for all three
 ///         mainstream token standards with Solady's `SafeTransferLib` and custom
 ///         errors.
+///
+/// @author 1001
 contract BatchTransfer {
     using SafeTransferLib for address;
 
@@ -41,6 +45,19 @@ contract BatchTransfer {
         address indexed from,
         uint256 quantity
     );
+
+    // ---------------------------------------------------------------------
+    // Construction
+    // ---------------------------------------------------------------------
+
+    /// @notice Claims `batchtransfer.eth` as this contract's ENS primary name.
+    /// @dev One-time deploy-time side effect against the canonical ENS L1
+    ///      Reverse Registrar. It writes no contract storage and grants no
+    ///      role, so the contract stays stateless and ownerless afterwards.
+    constructor() {
+        IReverseRegistrar(0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb)
+            .setName('batchtransfer.eth');
+    }
 
     // ---------------------------------------------------------------------
     // ERC-20
