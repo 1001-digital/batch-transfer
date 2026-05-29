@@ -31,9 +31,6 @@ const { isConnected } = useConnection()
 .site-header {
   border-block-end: var(--border);
   background: var(--card-background);
-  position: sticky;
-  inset-block-start: 0;
-  z-index: calc(var(--z-index-ui, 100) + 1);
 }
 
 .header-inner {
