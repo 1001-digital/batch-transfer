@@ -98,11 +98,10 @@
         </span>
         <input
           v-model="equalAmount"
-          type="number"
-          min="0"
-          step="any"
+          type="text"
           inputmode="decimal"
           placeholder="0.0"
+          autocomplete="off"
         />
       </label>
 

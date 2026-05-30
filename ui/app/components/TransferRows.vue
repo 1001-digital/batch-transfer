@@ -34,11 +34,13 @@
           <input
             v-else
             v-model="row[field]"
-            type="number"
-            min="0"
-            :step="field === 'amount' && standard === 'erc20' ? 'any' : '1'"
+            type="text"
+            :inputmode="
+              field === 'amount' && standard === 'erc20' ? 'decimal' : 'numeric'
+            "
             :placeholder="placeholderFor(field)"
-            inputmode="decimal"
+            autocomplete="off"
+            spellcheck="false"
           />
         </template>
 

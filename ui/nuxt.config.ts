@@ -41,13 +41,24 @@ export default defineNuxtConfig({
       // map in app/utils/batchTransfer.ts is used.
       batchTransferAddress: '',
       evm: {
-        // Optional WalletConnect project id (NUXT_PUBLIC_EVM_WALLET_CONNECT_PROJECT_ID).
-        walletConnectProjectId: '',
+        // WalletConnect project id, baked into the static build so the
+        // WalletConnect connector works on the IPFS deploy. It's a public
+        // client identifier (not a secret) and is locked to allowed origins in
+        // the WalletConnect/Reown dashboard. Override per-environment via
+        // NUXT_PUBLIC_EVM_WALLET_CONNECT_PROJECT_ID.
+        walletConnectProjectId: 'e5d1a7a02f43e5fac35d004443f086d3',
         chains: {
-          // Public read RPCs (space separated, tried in order). Wallet writes
-          // always go through the connected wallet, never these.
+          // Leave `rpcs` empty so reads route through the connected wallet's
+          // injected provider. The layer composes each chain's transport as
+          // fallback([...rpcs, unstable_connector(injected), http()]); with no
+          // configured rpcs, the wallet's injected RPC becomes the primary
+          // read transport (no browser CORS, and it matches the network the
+          // user selected), with viem's built-in chain RPC as a best-effort
+          // fallback for reads issued before a wallet connects. Operators can
+          // still supply dedicated endpoints via
+          // NUXT_PUBLIC_EVM_CHAINS_MAINNET_RPCS (space separated).
           mainnet: {
-            rpcs: 'https://eth.llamarpc.com https://ethereum-rpc.publicnode.com',
+            rpcs: '',
           },
         },
       },
