@@ -6,6 +6,9 @@ transaction — to one wallet or to many at once.
 A modern take on Aleph Retamal's `ERC721BatchTransfer`: a stateless,
 multi-standard batch transfer contract plus a static, IPFS-hostable UI.
 
+> [!NOTE]
+> This is the successor to [**1001-digital/batchtransfer-ui**](https://github.com/1001-digital/batchtransfer-ui) (now deprecated) — an overhauled rewrite that adds the `BatchTransfer` contract, ERC-1155 and ERC-20 support, send-to-many, and a new Nuxt 4 UI. See the [backstory](https://x.com/jalilwahdat/status/1616919632622878720).
+
 ## Monorepo
 
 pnpm workspace with two packages:
